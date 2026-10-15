@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trapmaker challenge</title>
+<meta name="description" content="A friend built a trap route in Trapmaker. Can you get past it?">
+<meta property="og:title" content="Can you get past my trap?">
+<meta property="og:description" content="A friend built this trap route in Trapmaker. Open it in the game and try to beat it.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://trapmaker.example/assets/hero.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="noindex">
+
+<link rel="icon" href="/trapmaker-site/assets/runner.webp">
+<link rel="stylesheet" href="/trapmaker-site/style.css">
+</head>
+<body>
+<main>
+  <header class="top">
+    <span class="brand">Trapmaker</span>
+    <a id="lang" href="?lang=ar">العربية</a>
+  </header>
+  <p id="bad" class="bad" hidden></p>
+  <section id="challenge">
+    <h1 data-t="title">Can you get past my trap?</h1>
+    <p class="lead" data-t="sub"></p>
+    <div class="picture"><canvas id="picture" width="960" height="440" aria-label="Challenge layout"></canvas></div>
+    <dl class="stats">
+      <div><dt data-t="level">Level</dt><dd id="level-name">-</dd></div>
+      <div><dt data-t="time">Creator's time</dt><dd id="time">-</dd></div>
+      <div><dt data-t="traps">Traps placed</dt><dd id="traps">-</dd></div>
+      <div><dt data-t="size">Size</dt><dd id="size">-</dd></div>
+    </dl>
+    <ul id="legend" class="legend"></ul>
+    <p class="note" data-t="note"></p>
+  </section>
+  <div class="actions">
+    <a id="store" class="btn primary" href="#">Download on the App Store</a>
+    <a id="open" class="btn" href="#" data-t="open">Open in the game</a>
+    <button id="copy" class="btn" type="button" data-t="copy">Copy challenge code</button>
+  </div>
+  <p class="how" data-t="how"></p>
+  <section class="about">
+    <img src="/trapmaker-site/assets/hero.webp" alt="" width="180" height="197">
+    <div><h2 data-t="what"></h2><p data-t="whatText"></p></div>
+  </section>
+  <footer><a href="/trapmaker-site/privacy.html">Privacy</a> &middot; <a href="/trapmaker-site/support.html">Support</a></footer>
+</main>
+<script src="/trapmaker-site/site.js"></script>
+<script src="/trapmaker-site/decoder.js"></script>
+<script src="/trapmaker-site/app.js"></script>
+</body>
+</html>
