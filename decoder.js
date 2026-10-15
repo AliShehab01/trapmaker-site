@@ -49,10 +49,11 @@
       var crc = crc16(data, end);
       if (data[end] !== (crc >> 8) || data[end + 1] !== (crc & 255)) return { ok: false, error: 'The code is damaged.' };
       var width = data[1], height = data[2];
-      if (width < 1 || height < 1 || width * height > MAX_CELLS) return { ok: false, error: 'Invalid size.' };
+      if (width < 8 || width > 64 || height < 4 || height > 32 || width * height > MAX_CELLS) return { ok: false, error: 'Invalid size.' };
       var nameLen = data[9];
       if (nameLen > 24 || 10 + nameLen > end) return { ok: false, error: 'Invalid name.' };
       var name = utf8(data.subarray(10, 10 + nameLen));
+      if (/[\u0000-\u001f\u007f-\u009f]/.test(name)) return { ok: false, error: 'Invalid name.' };
       var cells = new Array(width * height), at = 0, pos = 10 + nameLen;
       while (pos < end) {
         if (pos + 1 >= end) return { ok: false, error: 'Truncated layout.' };
@@ -63,6 +64,13 @@
       if (at !== cells.length) return { ok: false, error: 'Incomplete layout.' };
       var level = { width: width, height: height, spawnX: data[3], spawnY: data[4], goalX: data[5], goalY: data[6], name: name, cells: cells };
       if (level.spawnX >= width || level.goalX >= width || level.spawnY >= height || level.goalY >= height) return { ok: false, error: 'Invalid start or exit.' };
+      function validMarker(x, y) {
+        if (y < 1 || cells[y * width + x] !== 0) return false;
+        var below = cells[(y - 1) * width + x];
+        return below === 1 || below === 4 || below === 5 || below === 7;
+      }
+      if (!validMarker(level.spawnX, level.spawnY) || !validMarker(level.goalX, level.goalY) ||
+          (level.spawnX === level.goalX && level.spawnY === level.goalY)) return { ok: false, error: 'Invalid start or exit.' };
       return { ok: true, code: code, level: level, seconds: ((data[7] << 8) | data[8]) / 100 };
     } catch (e) {
       return { ok: false, error: 'The code could not be read.' };

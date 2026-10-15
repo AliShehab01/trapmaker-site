@@ -10,7 +10,7 @@
       open: 'Open in the game', store: 'Download on the App Store', soon: 'Coming soon to the App Store',
       copy: 'Copy challenge code', copied: 'Copied', how: 'Already have the game? Tap "Open in the game". Or copy the code, open Challenges, tap Import code and paste.',
       bad: 'This challenge link looks damaged or incomplete. Ask your friend to share it again.',
-      what: 'What is {app}?', whatText: 'Build a trap-filled route with a gold budget, then watch AI heroes try to survive it. Free to play on iPhone.',
+      what: 'What is {app}?', whatText: 'Build a trap-filled route with a gold budget, then watch AI heroes try to survive it. Preparing for release on iPhone.',
       note: 'The creator time is reported by the game on their phone and is not verified by a server.'
     },
     ar: {
@@ -20,7 +20,7 @@
       open: 'افتح في اللعبة', store: 'حمّل من App Store', soon: 'قريبًا على App Store', copy: 'انسخ رمز التحدي', copied: 'تم النسخ',
       how: 'عندك اللعبة؟ اضغط «افتح في اللعبة». أو انسخ الرمز، ثم افتح التحديات، واضغط استيراد رمز، والصقه.',
       bad: 'يبدو أن رابط التحدي تالف أو ناقص. اطلب من صديقك مشاركته من جديد.',
-      what: 'ما هي {app}؟', whatText: 'ابنِ مسارًا مليئًا بالفخاخ بميزانية من الذهب، ثم شاهد أبطال الذكاء الاصطناعي يحاولون النجاة. مجانية على آيفون.',
+      what: 'ما هي {app}؟', whatText: 'ابنِ مسارًا مليئًا بالفخاخ بميزانية من الذهب، ثم شاهد أبطال الذكاء الاصطناعي يحاولون النجاة. قيد الإعداد للإصدار على آيفون.',
       note: 'وقت المنشئ تسجله اللعبة على هاتفه ولا يتحقق منه أي خادم.'
     }
   };
@@ -39,7 +39,7 @@
   var code = result.ok ? result.code : null;
 
   var storeBtn = document.getElementById('store');
-  if (cfg.appStoreUrl) { storeBtn.href = cfg.appStoreUrl; storeBtn.textContent = t('store'); }
+  if (cfg.appStoreUrl) { storeBtn.href = cfg.appStoreUrl; storeBtn.textContent = t('store'); storeBtn.classList.remove('disabled'); storeBtn.removeAttribute('aria-disabled'); }
   else { storeBtn.removeAttribute('href'); storeBtn.classList.add('disabled'); storeBtn.textContent = t('soon'); }
   var openBtn = document.getElementById('open');
   var copyBtn = document.getElementById('copy');
@@ -81,7 +81,7 @@
   names.slice(1).forEach(function (name) {
     var img = new Image(); img.onload = ready; img.onerror = ready; img.src = '/trapmaker-site/assets/' + name + '.webp'; images[name] = img;
   });
-  var back = new Image(); back.src = 'assets/backdrop.webp'; back.onload = function () { if (pending <= 0) draw(); };
+  var back = new Image(); back.src = (cfg.basePath || '/') + 'assets/backdrop.webp'; back.onload = function () { if (pending <= 0) draw(); };
 
   function draw() {
     var canvas = document.getElementById('picture');
